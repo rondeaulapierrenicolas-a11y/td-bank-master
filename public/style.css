@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f5f5f7;
+    line-height: 1.6;
+    color: #1d1d1f;
+}
+
+.menu-top {
+    background-color: #008A00;
+    padding: 16px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cercle-verte {
+    background: white;
+    color: #008A00;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.titre-banque {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.liens-menu a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 500;
+}
+
+.liens-menu a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.bouton-connexion {
+    background: white;
+    color: #008A00;
+    padding: 10px 24px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.bouton-connexion:hover {
+    transform: scale(1.05);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #006400 0%, #00A300 100%);
+    color: white;
+    padding: 160px 50px 100px;
+    text-align: center;
+    margin-top: 70px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-section h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    line-height: 1.1;
+}
+
+.hero-section p {
+    font-size: 22px;
+    opacity: 0.95;
+    margin-bottom: 40px;
+}
+
+.bouton-principal {
+    background: white;
+    color: #008A00;
+    padding: 16px 32px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+}
+
+.bouton-principal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.grille-services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 60px 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.carte-service {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s;
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.carte-service:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+
+.icone {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.carte-service h3 {
+    color: #008A00;
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.carte-service p {
+    color: #86868b;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.pied-page {
+    background: #1d1d1f;
+    color: #86868b;
+    text-align: center;
+    padding: 40px;
+    margin-top: 60px;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 { font-size: 36px; }
+    .menu-top { padding: 16px 20px; }
+}

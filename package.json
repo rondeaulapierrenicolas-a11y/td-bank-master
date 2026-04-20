@@ -1,7 +1,7 @@
 {
-  "name": "projet-demo-master",
+  "name": "projet-demo-architecture",
   "version": "1.0.0",
-  "description": "Projet universitaire demonstration architecture client-serveur",
+  "description": "Projet universitaire demonstration architecture client-serveur web",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
